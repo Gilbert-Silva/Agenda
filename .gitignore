@@ -1,2 +1,5 @@
 # Ignorar pasta do venv
 [Ss]treamlit/
+[Mm}odels/_pycache_/
+[Tt}emplates/_pycache_/
+
