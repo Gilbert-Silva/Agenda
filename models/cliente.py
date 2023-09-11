@@ -1,16 +1,15 @@
 import json
-import streamlit as st
 
 class Cliente:
-  def __init__(self, _nome, _email, _fone, _id = 0):
+  def __init__(self, _id, _nome, _email, _fone):
+    self._id = _id
     self._nome = _nome
     self._email = _email
     self._fone = _fone
-    self._id = _id
   def __str__(self):
-    return f"{self._nome} - {self._email} - {self._fone} - {self._id}"
+    return f"{self._id} - {self._nome} - {self._email} - {self._fone}"
   def __eq__(self, x):
-    if self._nome == x._nome and self._email == x._email and self._fone == x._fone and self._id == x._id:
+    if self._id == x._id and self._nome == x._nome and self._email == x._email and self._fone == x._fone:
       return True
     return False  
        
@@ -43,9 +42,8 @@ class NCliente:
   def atualizar(cls, obj):
     cls.abrir()
     aux = cls.listar_id(obj._id)
-    aux._nome = obj._nome
-    aux._email = obj._email
-    aux._fone = obj._fone
+    cls.clientes.remove(aux)
+    cls.clientes.append(obj)
     cls.salvar()
 
   @classmethod
@@ -63,6 +61,7 @@ class NCliente:
         clientes_json = json.load(arquivo)
         for obj in clientes_json:
           cliente = Cliente(**obj)
+          cliente = Cliente(obj["_id"], obj["_nome"], obj["_email"], obj["_fone"])
           cls.clientes.append(cliente)
     except (FileNotFoundError):
       pass      
