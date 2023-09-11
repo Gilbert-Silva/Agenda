@@ -6,7 +6,7 @@ class ServicoUI:
   def listar():
     servicos = views.servico_listar()
     if len(servicos) == 0:
-      st.write("Nenhum servico cadastrado")
+      st.write("Nenhum serviço cadastrado")
     else:  
       df = []
       for obj in servicos: df.append(obj.__dict__)
@@ -25,7 +25,7 @@ class ServicoUI:
   def atualizar():
     servicos = views.servico_listar()
     if len(servicos) == 0:
-      st.write("Nenhum servico cadastrado")
+      st.write("Nenhum serviço cadastrado")
     else:  
       op = st.selectbox("Atualização de servicos", servicos)
       descricao = st.text_input("Informe a nova descrição", op._descricao)
@@ -40,7 +40,7 @@ class ServicoUI:
   def excluir():
     servicos = views.servico_listar()
     if len(servicos) == 0:
-      st.write("Nenhum servico cadastrado")
+      st.write("Nenhum serviço cadastrado")
     else:  
       op = st.selectbox("Exclusão de servicos", servicos)
       if st.button("Excluir"):
@@ -50,7 +50,7 @@ class ServicoUI:
         st.experimental_rerun()
   
   def main():
-    st.header("Cadastro de servicos")
+    st.header("Cadastro de serviços")
     tab1, tab2, tab3, tab4 = st.tabs(["Listar", "Inserir", "Atualizar", "Excluir"])
     with tab1: ServicoUI.listar()
     with tab2: ServicoUI.inserir()
