@@ -2,7 +2,7 @@ import streamlit as st
 import views
 import time
 
-class ServicoUI:
+class ManterServicoUI:
   def listar():
     servicos = views.servico_listar()
     if len(servicos) == 0:
@@ -14,7 +14,7 @@ class ServicoUI:
 
   def inserir():
     descricao = st.text_input("Informe a descrição")
-    valor = st.text_input("Informe o valor")
+    valor = st.text_input("Informe o valor (R$)")
     duracao = st.text_input("Informe a duração (min)")
     if st.button("Inserir"):
       views.servico_inserir(descricao, float(valor), int(duracao))
@@ -29,7 +29,7 @@ class ServicoUI:
     else:  
       op = st.selectbox("Atualização de servicos", servicos)
       descricao = st.text_input("Informe a nova descrição", op._descricao)
-      valor = st.text_input("Informe o novo valor", op._valor)
+      valor = st.text_input("Informe o novo valor (R$)", op._valor)
       duracao = st.text_input("Informe a nova duração (min)", op._duracao)
       if st.button("Atualizar"):
         views.servico_atualizar(descricao, float(valor), int(duracao))
@@ -50,9 +50,9 @@ class ServicoUI:
         st.experimental_rerun()
   
   def main():
-    st.header("Cadastro de serviços")
+    st.header("Cadastro de Serviços")
     tab1, tab2, tab3, tab4 = st.tabs(["Listar", "Inserir", "Atualizar", "Excluir"])
-    with tab1: ServicoUI.listar()
-    with tab2: ServicoUI.inserir()
-    with tab3: ServicoUI.atualizar()
-    with tab4: ServicoUI.excluir()
+    with tab1: ManterServicoUI.listar()
+    with tab2: ManterServicoUI.inserir()
+    with tab3: ManterServicoUI.atualizar()
+    with tab4: ManterServicoUI.excluir()

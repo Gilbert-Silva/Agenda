@@ -3,6 +3,7 @@ from models.servico import Servico, NServico
 from models.agenda import Agenda, NAgenda
 import datetime
 
+
 def cliente_listar():
   return NCliente.listar()
 
@@ -14,6 +15,7 @@ def cliente_atualizar(id, nome, email, fone):
 
 def cliente_excluir(id):
   NCliente.excluir(Cliente(id, "", "", ""))
+
 
 def servico_listar():
   return NServico.listar()
@@ -27,10 +29,20 @@ def servico_atualizar(id, descricao, valor, duracao):
 def servico_excluir(id):
   NServico.excluir(Servico(id, "", "", ""))
 
+
 def agenda_listar():
   return NAgenda.listar()
 
-def agenda_inserir(data, hinicio, hfim, intervalo):
+def agenda_inserir(data, confirmado, id_cliente, id_servico):
+  NAgenda.inserir(Agenda(0, data, confirmado, id_cliente, id_servico))
+
+def agenda_atualizar(id, data, confirmado, id_cliente, id_servico):
+  NAgenda.atualizar(Agenda(id, data, confirmado, id_cliente, id_servico))
+
+def agenda_excluir(id):
+  NAgenda.excluir(Agenda(id, "", "", 0, 0))
+
+def agenda_abrir_agenda(data, hinicio, hfim, intervalo):
   #data = datetime.datetime.strptime(datastr, "%d/%m/%Y %H:%M")
   data_inicio = datetime.datetime.strptime(f"{data} {hinicio}", "%d/%m/%Y %H:%M")
   data_fim = datetime.datetime.strptime(f"{data} {hfim}", "%d/%m/%Y %H:%M")
@@ -40,8 +52,11 @@ def agenda_inserir(data, hinicio, hfim, intervalo):
     NAgenda.inserir(Agenda(0, aux, False, 0, 0))
     aux = aux + delta
 
-def servico_atualizar(id, data, confirmado, id_cliente, id_servico):
-  NAgenda.atualizar(Agenda(id, data, confirmado, id_cliente, id_servico))
+def agenda_listar_nao_confirmados():
+  return NAgenda.listar_nao_confirmados()
 
-def servico_excluir(id):
-  NAgenda.excluir(Agenda(id, "", "", 0, 0))
+def agenda_confirmar_agendamento(id):
+  horario = NAgenda.listar_id(id)
+  horario._confirmado = True
+  NAgenda.atualizar(horario)
+  

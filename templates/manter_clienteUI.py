@@ -2,7 +2,7 @@ import streamlit as st
 import views
 import time
 
-class ClienteUI:
+class ManterClienteUI:
   def listar():
     clientes = views.cliente_listar()
     if len(clientes) == 0:
@@ -14,7 +14,7 @@ class ClienteUI:
 
   def inserir():
     nome = st.text_input("Informe o nome")
-    email = st.text_input("Informe o email")
+    email = st.text_input("Informe o e-mail")
     fone = st.text_input("Informe o fone")
     if st.button("Inserir"):
       views.cliente_inserir(nome, email, fone)
@@ -29,7 +29,7 @@ class ClienteUI:
     else:  
       op = st.selectbox("Atualização de Clientes", clientes)
       nome = st.text_input("Informe o novo nome", op._nome)
-      email = st.text_input("Informe o novo email", op._email)
+      email = st.text_input("Informe o novo e-mail", op._email)
       fone = st.text_input("Informe o novo fone", op._fone)
       if st.button("Atualizar"):
         views.cliente_atualizar(op._id, nome, email, fone)
@@ -52,7 +52,7 @@ class ClienteUI:
   def main():
     st.header("Cadastro de Clientes")
     tab1, tab2, tab3, tab4 = st.tabs(["Listar", "Inserir", "Atualizar", "Excluir"])
-    with tab1: ClienteUI.listar()
-    with tab2: ClienteUI.inserir()
-    with tab3: ClienteUI.atualizar()
-    with tab4: ClienteUI.excluir()
+    with tab1: ManterClienteUI.listar()
+    with tab2: ManterClienteUI.inserir()
+    with tab3: ManterClienteUI.atualizar()
+    with tab4: ManterClienteUI.excluir()

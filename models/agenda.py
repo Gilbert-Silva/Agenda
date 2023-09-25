@@ -36,6 +36,17 @@ class NAgenda:
     return cls.agendas
 
   @classmethod
+  def listar_nao_confirmados(cls):
+    cls.abrir()
+    nao_confirmados = []
+    aux = datetime.datetime.now()
+    hoje = datetime.datetime(aux.year, aux.month, aux.day)
+    for aux in cls.agendas:
+      if not aux._confirmado and aux._data > hoje: 
+        nao_confirmados.append(aux)
+    return nao_confirmados
+
+  @classmethod
   def listar_id(cls, id):
     cls.abrir()
     for obj in cls.agendas: 

@@ -1,23 +1,32 @@
 import streamlit as st
-from templates.clienteUI import ClienteUI
 from templates.inicioUI import InicioUI
-from templates.servicoUI import ServicoUI
-from templates.agendaUI import AgendaUI
+from templates.manter_clienteUI import ManterClienteUI
+from templates.manter_servicoUI import ManterServicoUI
+from templates.manter_agendaUI import ManterAgendaUI
+from templates.abrir_agendaUI import AbrirAgendaUI
+from templates.confirmar_agendamentoUI import ConfirmarAgendamentoUI
 
 def sidebar():
-  op = st.sidebar.selectbox("Menu", ["Início", "Clientes", "Serviços", "Agenda"])
+  op = st.sidebar.selectbox("Menu", ["Início", "Manter Clientes", "Manter Serviços", 
+                                     "Manter Agenda", "Abrir Agenda do Dia",
+                                     "Confirmar Agendamento"])
   if op == "Início": st.session_state["page"] = "inicioUI"
-  if op == "Clientes": st.session_state["page"] = "clienteUI"
-  if op == "Serviços": st.session_state["page"] = "servicoUI"
-  if op == "Agenda": st.session_state["page"] = "agendaUI"
+  if op == "Manter Clientes": st.session_state["page"] = "manter_clienteUI"
+  if op == "Manter Serviços": st.session_state["page"] = "manter_servicoUI"
+  if op == "Manter Agenda": st.session_state["page"] = "manter_agendaUI"
+  if op == "Abrir Agenda do Dia": st.session_state["page"] = "abrir_agendaUI"
+  if op == "Confirmar Agendamento": st.session_state["page"] = "confirmar_agendamentoUI"
+
 
 def main():
   sidebar()
   if "page" not in st.session_state: st.session_state["page"] = "inicioUI"
   if st.session_state["page"] == "inicioUI": InicioUI.main()
-  if st.session_state["page"] == "clienteUI": ClienteUI.main()
-  if st.session_state["page"] == "servicoUI": ServicoUI.main()
-  if st.session_state["page"] == "agendaUI": AgendaUI.main()
+  if st.session_state["page"] == "manter_clienteUI": ManterClienteUI.main()
+  if st.session_state["page"] == "manter_servicoUI": ManterServicoUI.main()
+  if st.session_state["page"] == "manter_agendaUI": ManterAgendaUI.main()
+  if st.session_state["page"] == "abrir_agendaUI": AbrirAgendaUI.main()
+  if st.session_state["page"] == "confirmar_agendamentoUI": ConfirmarAgendamentoUI.main()
 
 main()
 
