@@ -1,72 +1,112 @@
 import json
+from models.modelo import Modelo
 
 class Servico:
-  def __init__(self, _id, _descricao, _valor, _duracao):
-    self._id = _id
-    self._descricao = _descricao
-    self._valor = _valor
-    self._duracao = _duracao
-  def __str__(self):
-    return f"{self._id} - {self._descricao} - {self._valor:.2f} - {self._duracao} min"
+  def __init__(self, id, descricao, valor, duracao):
+    self.__id = id
+    self.__descricao = descricao
+    self.__valor = valor
+    self.__duracao = duracao
+    if valor < 0: raise ValueError("Valor não pode ser negativo")
+    if duracao < 0: raise ValueError("Duração não pode ser negativa")
+
+  def get_id(self): return self.__id
+  def get_descricao(self): return self.__descricao
+  def get_valor(self): return self.__valor
+  def get_duracao(self): return self.__duracao
+
+  def set_id(self, id): self.__id = id
+  def set_descricao(self, descricao): self.__descricao = descricao
+  def set_valor(self, valor): 
+    self.__valor = valor
+    if valor < 0: raise ValueError("Valor não pode ser negativo")
+  def set_duracao(self, duracao): 
+    self.__duracao = duracao
+    if duracao < 0: raise ValueError("Duração não pode ser negativa")
+
   def __eq__(self, x):
-    if self._id == x._id and self._descricao == x._descricao and self._valor == x._valor and self._duracao == x._duracao:
+    if self.__id == x.__id and self.__descricao == x.__descricao and self.__valor == x.__valor and self.__duracao == x.__duracao:
       return True
     return False
-  
-class NServico:
-  servicos = []
+
+  def __str__(self):
+    return f"{self.__id} - {self.__descricao} - {self.__valor:.2f} - {self.__duracao} min"
+
+class NServico(Modelo):
+  @classmethod
+  def abrir(cls):
+    cls.objetos = []
+    try:
+      with open("servicos.json", mode="r") as arquivo:
+        servicos_json = json.load(arquivo)
+        for obj in servicos_json:
+          aux = Servico(obj["_Servico__id"], obj["_Servico__descricao"], obj["_Servico__valor"], obj["_Servico__duracao"])
+          cls.objetos.append(aux)
+    except FileNotFoundError:
+      pass
+
+  @classmethod
+  def salvar(cls):
+    with open("servicos.json", mode="w") as arquivo:
+      json.dump(cls.objetos, arquivo, default=vars)
+
+
+class NServico2:
+  __servicos = []
 
   @classmethod
   def inserir(cls, obj):
     cls.abrir()
     id = 0
-    for aux in cls.servicos:
-      if aux._id > id: id = aux._id
-    obj._id = id + 1
-    cls.servicos.append(obj)
+    for aux in cls.__servicos:
+      if aux.get_id() > id: id = aux.get_id()
+    obj.set_id(id + 1)
+    cls.__servicos.append(obj)
     cls.salvar()
 
   @classmethod
   def listar(cls):
     cls.abrir()
-    return cls.servicos
+    return cls.__servicos
 
   @classmethod
   def listar_id(cls, id):
     cls.abrir()
-    for obj in cls.servicos: 
-      if obj._id == id: return obj
+    for obj in cls.__servicos:
+      if obj.get_id() == id: return obj
     return None
 
   @classmethod
   def atualizar(cls, obj):
     cls.abrir()
-    aux = cls.listar_id(obj._id)
-    cls.servicos.remove(aux)
-    cls.servicos.append(obj)
-    cls.salvar()
+    aux = cls.listar_id(obj.get_id())
+    if aux is not None:
+      aux.set_descricao(obj.get_descricao())
+      aux.set_valor(obj.get_valor())
+      aux.set_duracao(obj.get_duracao())
+      cls.salvar()
 
   @classmethod
   def excluir(cls, obj):
     cls.abrir()
-    aux = cls.listar_id(obj._id)
-    cls.servicos.remove(aux)
-    cls.salvar()
+    aux = cls.listar_id(obj.get_id())
+    if aux is not None:
+      cls.__servicos.remove(aux)
+      cls.salvar()
 
   @classmethod
   def abrir(cls):
-    cls.servicos = []
-    try: 
+    cls.__servicos = []
+    try:
       with open("servicos.json", mode="r") as arquivo:
         servicos_json = json.load(arquivo)
         for obj in servicos_json:
-          servico = Servico(**obj)
-          cls.servicos.append(servico)
-    except (FileNotFoundError):
-      pass      
+          aux = Servico(obj["_Servico__id"], obj["_Servico__descricao"], obj["_Servico__valor"], obj["_Servico__duracao"])
+          cls.__servicos.append(aux)
+    except FileNotFoundError:
+      pass
 
-  @classmethod 
+  @classmethod
   def salvar(cls):
     with open("servicos.json", mode="w") as arquivo:
-      json.dump(cls.servicos, arquivo, default=lambda obj: obj.__dict__)      
-
+      json.dump(cls.__servicos, arquivo, default=vars)

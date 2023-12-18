@@ -1,1 +1,1 @@
-[{"_id": 1, "_descricao": "Lavagem Geral", "_valor": 80.0, "_duracao": 30}, {"_id": 2, "_descricao": "Lavagem Simples", "_valor": 40.0, "_duracao": 20}]
+[{"_Servico__id": 1, "_Servico__descricao": "Lavagem Simples", "_Servico__valor": 54.45000000000002, "_Servico__duracao": 45}, {"_Servico__id": 2, "_Servico__descricao": "Lavagem Completa", "_Servico__valor": 98.01000000000002, "_Servico__duracao": 60}]
