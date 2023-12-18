@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 import views
 import time
 
@@ -11,6 +12,8 @@ class ManterClienteUI:
       df = []
       for obj in clientes: df.append(obj.__dict__)
       st.dataframe(df, use_container_width=True)
+      #df = pd.DataFrame(clientes)
+      #st.dataframe(df)      
 
   def inserir():
     nome = st.text_input("Informe o nome")
