@@ -17,17 +17,8 @@ class Cliente:
     def set_email(self, email): self.__email = email
     def set_fone(self, fone): self.__fone = fone
 
-    #def __eq__(self, x):
-    #    if self.__id == x.__id and self.__nome == x.__nome and self.__email == x.__email and self.__fone == x.__fone:
-    #        return True
-    #    return False
-
     def to_json(self):
-        dic = {}
-        dic["id"] = self.__id
-        dic["nome"] = self.__nome
-        dic["email"] = self.__email
-        dic["fone"] = self.__fone
+        dic = {"id":self.__id, "nome":self.__nome, "email":self.__email, "fone":self.__fone}
         return dic
     
     @staticmethod
