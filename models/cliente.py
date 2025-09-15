@@ -2,10 +2,10 @@ import json
 
 class Cliente:
     def __init__(self, id, nome, email, fone):
-        self.__id = id
-        self.__nome = nome
-        self.__email = email
-        self.__fone = fone
+        self.set_id(id)
+        self.set_nome(nome)
+        self.set_email(email)
+        self.set_fone(fone)
 
     def get_id(self): return self.__id
     def get_nome(self): return self.__nome
