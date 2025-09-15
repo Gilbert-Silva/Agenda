@@ -73,9 +73,9 @@ class ClienteDAO():
         cls.__objetos = []
         try:
             with open("clientes.json", mode="r") as arquivo:
-                list_obj_json = json.load(arquivo)
-                for obj_json in list_obj_json:
-                    obj = Cliente.from_json(obj_json)
+                list_dic = json.load(arquivo)
+                for dic in list_dic:
+                    obj = Cliente.from_json(dic)
                     cls.__objetos.append(obj)
         except FileNotFoundError:
             pass

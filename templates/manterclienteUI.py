@@ -14,12 +14,11 @@ class ManterClienteUI:
 
     def listar():
         clientes = View.cliente_listar()
-        if len(clientes) == 0:
-            st.write("Nenhum cliente cadastrado")
+        if len(clientes) == 0: st.write("Nenhum cliente cadastrado")
         else:
-            dic = []
-            for obj in clientes: dic.append(obj.to_json())
-            df = pd.DataFrame(dic)
+            list_dic = []
+            for obj in clientes: list_dic.append(obj.to_json())
+            df = pd.DataFrame(list_dic)
             st.dataframe(df)
 
     def inserir():
@@ -34,8 +33,7 @@ class ManterClienteUI:
 
     def atualizar():
         clientes = View.cliente_listar()
-        if len(clientes) == 0:
-            st.write("Nenhum cliente cadastrado")
+        if len(clientes) == 0: st.write("Nenhum cliente cadastrado")
         else:
             op = st.selectbox("Atualização de Clientes", clientes)
             nome = st.text_input("Informe o novo nome", op.get_nome())
@@ -50,8 +48,7 @@ class ManterClienteUI:
 
     def excluir():
         clientes = View.cliente_listar()
-        if len(clientes) == 0:
-            st.write("Nenhum cliente cadastrado")
+        if len(clientes) == 0: st.write("Nenhum cliente cadastrado")
         else:
             op = st.selectbox("Exclusão de Clientes", clientes)
             if st.button("Excluir"):
