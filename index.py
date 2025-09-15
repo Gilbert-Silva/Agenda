@@ -1,3 +1,8 @@
 from templates.manterclienteUI import ManterClienteUI
 
-ManterClienteUI.main()
+class IndexUI:
+    def main():
+        ManterClienteUI.main()
+
+IndexUI.main()
+
